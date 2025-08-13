@@ -1,74 +1,118 @@
-import React from 'react'
-import { FileUpload } from '@/components/ui/file-upload';
-import { CheckCircle, Shield, Zap } from 'lucide-react';
+import React, { useState } from "react";
+import Tesseract from "tesseract.js";
 
-const reportAnalyzer = () => {
-  
-  const handleFilesChange = (files) => {
-    // Handle the uploaded files here
-    // For example, you can log them to the console or start an upload process
-    console.log(files);
+export default function ReportAnalyzer() {
+  const [text, setText] = useState("");
+  const [tableData, setTableData] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [llmAnswer, setLlmAnswer] = useState("");
+
+  const handleFile = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    setText("");
+    setTableData([]);
+
+    if (file.type.startsWith("image/")) {
+      await recognizeImage(URL.createObjectURL(file));
+    } else {
+      alert("Please upload an image file.");
+    }
+  };
+
+
+  // Gemini API call
+  const callLLM = async (ocrText) => {
+    setLlmAnswer("LLM is Thinking!");
+    try {
+    const response = await fetch(`https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key=${import.meta.env.VITE_GEMINI_API_KEY}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        contents: [{
+          parts: [{
+            text: `Simplify this medical report for a layperson: ${ocrText}`
+          }]
+        }]
+      }),
+    });
+    const data = await response.json();
+    console.log("LLM Response:", data);
+    setLlmAnswer(data.candidates?.[0]?.content?.parts?.[0]?.text || "No answer from LLM.");
+  } catch (err) {
+    setLlmAnswer("Error contacting LLM: " + err.message);
+  }
+  };
+
+  const recognizeImage = async (imageURL) => {
+    setLoading(true);
+
+    const img = new window.Image();
+    img.src = imageURL;
+    img.onload = async () => {
+      // Use the whole image for OCR
+      const canvas = document.createElement("canvas");
+      const ctx = canvas.getContext("2d");
+      canvas.width = img.width;
+      canvas.height = img.height;
+      ctx.drawImage(img, 0, 0, img.width, img.height);
+
+      const { data: { text } } = await Tesseract.recognize(canvas, "eng", {
+        preserve_interword_spaces: 1
+      });
+
+  const ocrResult = text.trim();
+  setText(ocrResult);
+  setLoading(false);
+  // parseTable(ocrResult);
+  await callLLM(ocrResult);
+    };
+  };
+
+  const parseTable = (rawText) => {
+    const lines = rawText.split(/\r?\n/).filter(line => line.trim().length > 0);
+    const rows = lines.map(line => line.split(/\s{2,}|\t+/).map(cell => cell.trim()));
+    const filteredRows = rows.filter(row => row.length > 1);
+    setTableData(filteredRows);
   };
 
   return (
-    <div className=" bg-black md:h-[100vh] w-[100vw] flex md:flex-row flex-col  items-center justify-center">
-      <div className="reportbg absolute inset-0 "></div>
-<div className="md:w-[50%] md:h-[100%] flex items-center justify-center p-8 relative z-10">
-        <div className="max-w-lg space-y-8 text-white">
-          {/* Main Headline */}
-          <div className="space-y-4">
-            <h1 className="text-[2.5rem] whitespace-nowrap font-bold bg-gradient-to-r from-cyan-400 via-purple-500 to-pink-500 bg-clip-text text-transparent">
-              Scan. Verify. Trust.
-            </h1>
-            <p className="text-[0.9rem] text-gray-300 font-medium">
-              Instantly debunk myths and validate health information with our real-time screen scanner.
-            </p>
-          </div>
-
-          {/* Description */}
-          <div className="space-y-4">
-            <p className="text-gray-400 text-[1rem] leading-relaxed">
-              In a world of information overload, getting trusted health advice is critical. This browser extension acts as your personal fact-checker, using advanced AI to scan, analyze, and validate health content on any page.
-            </p>
-          </div>
-
-          {/* Feature Highlights */}
-          <div className="space-y-4">
-            <div className="flex items-center space-x-3">
-              <div className="p-2 rounded-lg bg-gradient-to-r from-cyan-500/20 to-blue-500/20 border border-cyan-500/30">
-                <Zap className="w-5 h-5 text-cyan-400" />
-              </div>
-              <span className="text-gray-300">Real-time content scanning</span>
-            </div>
-            
-            <div className="flex items-center space-x-3">
-              <div className="p-2 rounded-lg bg-gradient-to-r from-purple-500/20 to-pink-500/20 border border-purple-500/30">
-                <CheckCircle className="w-5 h-5 text-purple-400" />
-              </div>
-              <span className="text-gray-300">AI-powered accuracy validation</span>
-            </div>
-            
-            <div className="flex items-center space-x-3">
-              <div className="p-2 rounded-lg bg-gradient-to-r from-green-500/20 to-emerald-500/20 border border-green-500/30">
-                <Shield className="w-5 h-5 text-green-400" />
-              </div>
-              <span className="text-gray-300">Trusted source verification</span>
-            </div>
-          </div>
-
-          {/* Call to Action Text */}
-          <div className="pt-4">
-            <p className="text-sm text-gray-500 italic">
-              Upload your medical reports to get started with AI-powered analysis →
-            </p>
-          </div>
+    <div style={{ padding: "20px" }}>
+      <h2>Report Analyzer</h2>
+  <input type="file" accept="image/*" onChange={handleFile} />
+      {loading && <p>Processing...</p>}
+      
+      {/* {tableData.length > 0 && (
+        <div style={{ overflowX: "auto", marginTop: 20 }}>
+          <h3>Extracted Table:</h3>
+          <table border="1" cellPadding="8" style={{ borderCollapse: "collapse", minWidth: 400 }}>
+            <tbody>
+              {tableData.map((row, i) => (
+                <tr key={i}>
+                  {row.map((cell, j) => (
+                    <td key={j}>{cell}</td>
+                  ))}
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
-      </div>
-<div className='md:w-[50%] md:h-[100%] flex items-center justify-center'>
-        <FileUpload onChange={handleFilesChange} />
-      </div>
+      )}
+      {text && (
+        <div style={{ marginTop: 20 }}>
+          <h3>Extracted Text:</h3>
+          <pre>{text}</pre>
+        </div>
+      )} */}
+      {llmAnswer && (
+        <div style={{ marginTop: 20, background: '#f0f0f0', padding: 16, borderRadius: 8 }}>
+          <h3>LLM Simplified Answer:</h3>
+          <div>{llmAnswer}</div>
+        </div>
+      )}
     </div>
-  )
+  );
 }
-
-export default reportAnalyzer
