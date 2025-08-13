@@ -1,0 +1,48 @@
+$primary: #DADFF7;       
+$secondary: #B5B2C2;     
+$accent: #F1DB4B;        
+$highlight: #03CEA4;    
+$background: #101419;   
+$card-bg: lighten(#101419, 5%);
+
+$light-mode-bg: #FFFFFF; 
+$light-mode-sidebar: #81D2C7; 
+$light-mode-card: #52EDD8; 
+$light-mode-text: #000000; 
+
+$error: #FF6B6B;
+$success: #4CAF50;  
+$warning: #FFC107;
+$info: #2196F3;
+$danger : #FF6B6B;
+
+$spacing-xs: 0.25rem;
+$spacing-sm: 0.5rem;
+$spacing-md: 1rem;
+$spacing-lg: 1.5rem;
+$spacing-xl: 2rem;
+
+$border-radius-sm: 4px;
+$border-radius-md: 8px;
+$border-radius-lg: 12px;
+
+$shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.12);
+$shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+$shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+
+$transition-fast: 0.2s ease;
+$transition-normal: 0.3s ease;
+$transition-slow: 0.5s ease;
+
+$breakpoint-sm: 576px;
+$breakpoint-md: 768px;
+$breakpoint-lg: 992px;
+$breakpoint-xl: 1200px;
+
+$z-index-dropdown: 1000;
+$z-index-sticky: 1020;
+$z-index-fixed: 1030;
+$z-index-modal-backdrop: 1040;
+$z-index-modal: 1050;
+$z-index-popover: 1060;
+$z-index-tooltip: 1070; 

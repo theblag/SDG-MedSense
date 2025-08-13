@@ -1,0 +1,54 @@
+// Theme Colors
+$primary: #DADFF7;       // Lavender (web) - Primary text/accents
+$secondary: #B5B2C2;     // French gray - Secondary text
+$accent: #F1DB4B;        // Naplex yellow - Accent/buttons
+$highlight: #03CEA4;     // Mini - Highlights
+$background: #101419;    // Dark purple - Background
+$card-bg: lighten(#101419, 5%);
+$light-mode-bg: #CDF7F6; // Light teal - Light mode background
+$light-mode-sidebar: #B8F0EE; // Slightly darker teal - Light mode sidebar
+$text: #333333;
+
+// Additional UI Colors
+$error: #FF6B6B;
+$success: #4CAF50;  
+$warning: #FFC107;
+$info: #2196F3;
+$danger: #e74c3c;
+
+// Spacing
+$spacing-xs: 0.25rem;
+$spacing-sm: 0.5rem;
+$spacing-md: 1rem;
+$spacing-lg: 1.5rem;
+$spacing-xl: 2rem;
+
+// Border Radius
+$border-radius-sm: 4px;
+$border-radius-md: 8px;
+$border-radius-lg: 12px;
+
+// Shadows
+$shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.12);
+$shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+$shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+
+// Transitions
+$transition-fast: 0.2s ease;
+$transition-normal: 0.3s ease;
+$transition-slow: 0.5s ease;
+
+// Breakpoints
+$breakpoint-sm: 576px;
+$breakpoint-md: 768px;
+$breakpoint-lg: 992px;
+$breakpoint-xl: 1200px;
+
+// Z-index layers
+$z-index-dropdown: 1000;
+$z-index-sticky: 1020;
+$z-index-fixed: 1030;
+$z-index-modal-backdrop: 1040;
+$z-index-modal: 1050;
+$z-index-popover: 1060;
+$z-index-tooltip: 1070; 

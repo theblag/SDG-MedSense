@@ -1,0 +1,51 @@
+# ==========================
+# Node / React frontend
+# ==========================
+node_modules/
+build/
+dist/
+.cache/
+*.log
+.env
+.env.*.local
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# ==========================
+# Python / FastAPI backend
+# ==========================
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+ENV/
+.venv/
+pip-wheel-metadata/
+*.egg-info/
+.eggs/
+*.log
+
+# ==========================
+# VS Code / Editor
+# ==========================
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# ==========================
+# OS Files
+# ==========================
+.DS_Store
+Thumbs.db
+
+# ==========================
+# Temporary files
+# ==========================
+*.tmp
+*.temp
+*.bak
