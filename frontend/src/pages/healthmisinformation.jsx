@@ -3,6 +3,7 @@ import { sendMessageToGemini } from '../services/geminiservice';
 import { useNavigate } from 'react-router-dom';
 import { auth, database } from '../config/firebase';
 import { collection, doc, getDoc, getDocs } from 'firebase/firestore';
+import NavBar from '@/components/navbar';
 
 const HealthMisinformationGuard = () => {
   const [messages, setMessages] = useState([]);
@@ -528,6 +529,9 @@ const HealthMisinformationGuard = () => {
 
   return (
     <div className="flex flex-col h-screen bg-gray-900 text-gray-100">
+            <div className="navbar fixed top-[1rem] left-1/2 -translate-x-1/2 z-50 ">
+                  <NavBar />
+            </div>
       {/* Header */}
       <div className="bg-gray-800 border-b border-gray-700 p-4">
         <div className="container mx-auto flex justify-between items-center">
