@@ -2,9 +2,11 @@ import React from 'react'
 import DownloadButton from '@/components/downloadButton'
 import { PulsatingButton } from "@/components/magicui/pulsating-button";
 
-const Testpage = () => {
+
+const Extension = () => {
   return (
-    <div className="bg-gray-900 min-h-screen p-6"> {/* Add a dark background to container */}
+    <div className="bg-black min-h-screen p-6"> {/* Add a dark background to container */}
+      <div className=' absolute inset-0 extensionbg ' ></div>
       <div className="w-full flex items-center justify-center">
         <div className="w-[90%] text-left mx-auto space-y-8 text-white">
 
@@ -30,7 +32,7 @@ const Testpage = () => {
 
             <div>
               <h2 className="font-semibold text-white text-lg">1. Download the .zip File</h2>
-              <p className="text-gray-300 text-[1rem] leading-relaxed">
+              <p className="text-gray-300 text-[1rem] mb-[1rem] leading-relaxed">
                 Click the download link from your friend and save the .zip file to an easy-to-find location (e.g., Desktop or Downloads).
               </p>
               <DownloadButton />
@@ -90,4 +92,4 @@ const Testpage = () => {
   )
 }
 
-export default Testpage
+export default Extension

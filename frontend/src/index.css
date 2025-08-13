@@ -26,6 +26,11 @@ background: #2957ba;
 background: radial-gradient(circle, rgba(41, 87, 186, 0.28) 39%, rgba(255, 255, 255, 0) 100%); 
 }
 
+.extensionbg {
+background: #2957ba;
+background: radial-gradient(circle, rgba(41, 87, 186, 0.28) 39%, rgba(255, 255, 255, 0) 100%); 
+}
+
 @layer base {
   :root {
         --background: 0 0% 100%;
