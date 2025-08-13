@@ -78,7 +78,7 @@ const Home = () => {
       icon: "https://cdn.lordicon.com/wzwygmng.json",
       iconRef: iconRef6,
       glowColor: "green",
-      route: "/emergency"
+      route: "/doubts"
     }
   ];
 
