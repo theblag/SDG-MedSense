@@ -26,8 +26,6 @@ background: #2957ba;
 background: radial-gradient(circle, rgba(41, 87, 186, 0.28) 39%, rgba(255, 255, 255, 0) 100%); 
 }
 
-
-
 @layer base {
   :root {
         --background: 0 0% 100%;
@@ -82,9 +80,10 @@ background: radial-gradient(circle, rgba(41, 87, 186, 0.28) 39%, rgba(255, 255, 
         --chart-4: 280 65% 60%;
         --chart-5: 340 75% 55%;
     }
+  .theme {
+        --animate-pulse: pulse var(--duration) ease-out infinite;
+    }
 }
-
-
 
 @layer base {
   * {
@@ -92,5 +91,16 @@ background: radial-gradient(circle, rgba(41, 87, 186, 0.28) 39%, rgba(255, 255, 
     }
   body {
     @apply bg-background text-foreground;
+    }
+}
+
+@theme inline {
+  @keyframes pulse {
+  0%, 100% {
+    boxShadow: 0 0 0 0 var(--pulse-color);
+        }
+  50% {
+    boxShadow: 0 0 0 8px var(--pulse-color);
+        }
     }
 }
