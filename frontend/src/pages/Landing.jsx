@@ -88,21 +88,42 @@ const Landing = () => {
               <div className="desc text-center text-[0.9rem] text-slate-400 ">Upload medical reports like blood tests. Our AI extracts data with OCR, explains it in simple terms, and highlights commonly misunderstood values.</div>
             </div>
           </GlowCard>
+          
           <GlowCard customSize className="w-1/2 md:w-full h-[60vh] md:h-[60vh] py-[3rem] px-[2rem] flex items-center justify-center">
             <div className="glow-card-content">
               <div className="icon flex justify-center mb-[10%] ">
-                <lord-icon
-                  ref={iconRef}
-                  src="https://cdn.lordicon.com/yaxbmvvh.json"
-                  trigger="hover"
-                  style={{
+<lord-icon
+    src="https://cdn.lordicon.com/iamvsnir.json"
+    trigger="hover"
+    colors="primary:#16a9c7,secondary:#b4b4b4,tertiary:#ebe6ef,quaternary:#f24c00,quinary:#4bb3fd"
+    style={{
+                    width: 'clamp(40px, 8vw, 65px)',
+                    height: 'clamp(40px, 8vw, 65px)',
+                    marginBottom: '0px',
+                    cursor: 'pointer',
+                    margin: "0px"
+                  }}>
+</lord-icon>
+              </div>
+              <div className="title text-center text-[1.5rem] text-white leading-[1.5rem] mb-[1rem] ">Voice-Activated Health Misinformation Guard</div>
+              <div className="desc text-center text-[0.9rem] text-slate-400 ">Listens to live audio (e.g., voice notes, podcasts) and transcribes in real-time. Instantly flags misinformation with voice or pop-up alerts and provides quick, trusted explanations while ensuring user privacy.</div>
+            </div>
+          </GlowCard>
+          <GlowCard customSize className="w-1/2 md:w-full h-[60vh] md:h-[60vh] py-[3rem] px-[2rem] flex items-center justify-center">
+            <div className="glow-card-content">
+              <div className="icon flex justify-center mb-[10%] ">
+<lord-icon
+    src="https://cdn.lordicon.com/uqxlhxnl.json"
+    trigger="hover"
+    style={{
                     width: 'clamp(40px, 8vw, 65px)',
                     height: 'clamp(40px, 8vw, 65px)',
                     marginBottom: '0px',
                     cursor: 'pointer',
                     margin: "0px"
                   }}
-                />
+    >
+</lord-icon>
               </div>
               <div className="title text-center text-[1.5rem] text-white leading-[1.5rem] mb-[1rem] ">Interactive Quiz</div>
               <div className="desc text-center text-[0.9rem] text-slate-400 ">A gamified, AI-powered quiz that challenges you on common health myths. The quiz adapts to your knowledge, making learning about health facts fun.</div>
@@ -113,7 +134,7 @@ const Landing = () => {
               <div className="icon flex justify-center mb-[10%] ">
                 <lord-icon
                   ref={iconRef}
-                  src="https://cdn.lordicon.com/yaxbmvvh.json"
+                  src="https://cdn.lordicon.com/abhwievu.json"
                   trigger="hover"
                   style={{
                     width: 'clamp(40px, 8vw, 65px)',
@@ -124,8 +145,8 @@ const Landing = () => {
                   }}
                 />
               </div>
-              <div className="title text-center text-[1.5rem] text-white leading-[1.5rem] mb-[1rem] ">Real-Time Scanner</div>
-              <div className="desc text-center text-[0.9rem] text-slate-400 ">A browser extension using OCR and NLP to scan your screen. It validates health info in real-time, offering fact-checks and instant alerts.</div>
+              <div className="title text-center text-[1.5rem] text-white leading-[1.5rem] mb-[1rem] ">Peer Fact-Check & Collaborative Correction Wall</div>
+              <div className="desc text-center text-[0.9rem] text-slate-400 ">Users share suspicious health claims; AI analyzes and displays verdicts publicly. Community can upvote, downvote, and submit corrections to improve accuracy and help debunk popular myths.</div>
             </div>
           </GlowCard>
           <GlowCard customSize className="w-1/2 md:w-full h-[60vh] md:h-[60vh] py-[3rem] px-[2rem] flex items-center justify-center">
@@ -133,7 +154,7 @@ const Landing = () => {
               <div className="icon flex justify-center mb-[10%] ">
                 <lord-icon
                   ref={iconRef}
-                  src="https://cdn.lordicon.com/yaxbmvvh.json"
+                  src="https://cdn.lordicon.com/ilgzgiqi.json"
                   trigger="hover"
                   style={{
                     width: 'clamp(40px, 8vw, 65px)',
@@ -144,28 +165,8 @@ const Landing = () => {
                   }}
                 />
               </div>
-              <div className="title text-center text-[1.5rem] text-white leading-[1.5rem] mb-[1rem] ">Real-Time Scanner</div>
-              <div className="desc text-center text-[0.9rem] text-slate-400 ">A browser extension using OCR and NLP to scan your screen. It validates health info in real-time, offering fact-checks and instant alerts.</div>
-            </div>
-          </GlowCard>
-          <GlowCard customSize className="w-1/2 md:w-full h-[60vh] md:h-[60vh] py-[3rem] px-[2rem] flex items-center justify-center">
-            <div className="glow-card-content">
-              <div className="icon flex justify-center mb-[10%] ">
-                <lord-icon
-                  ref={iconRef}
-                  src="https://cdn.lordicon.com/yaxbmvvh.json"
-                  trigger="hover"
-                  style={{
-                    width: 'clamp(40px, 8vw, 65px)',
-                    height: 'clamp(40px, 8vw, 65px)',
-                    marginBottom: '0px',
-                    cursor: 'pointer',
-                    margin: "0px"
-                  }}
-                />
-              </div>
-              <div className="title text-center text-[1.5rem] text-white leading-[1.5rem] mb-[1rem] ">Real-Time Scanner</div>
-              <div className="desc text-center text-[0.9rem] text-slate-400 ">A browser extension using OCR and NLP to scan your screen. It validates health info in real-time, offering fact-checks and instant alerts.</div>
+              <div className="title text-center text-[1.5rem] text-white leading-[1.5rem] mb-[1rem] ">Medical Knowledge Assistant</div>
+              <div className="desc text-center text-[0.9rem] text-slate-400 ">Upload your medical textbooks and get accurate answers to all your queries. Our AI-powered tool analyzes your PDFs and provides precise explanations, summaries, and guidance.</div>
             </div>
           </GlowCard>
         </div>
@@ -173,36 +174,26 @@ const Landing = () => {
           <p className=' text-[2rem] text-white ' >FAQs</p>
           <Accordion type="single" collapsible className="w-full max-w-2xl text-white ">
             <AccordionItem value="item-1">
-              <AccordionTrigger>Accordion Item 1</AccordionTrigger>
-              <AccordionContent>Accordion Content 1</AccordionContent>
+              <AccordionTrigger>What problem does your project solve?</AccordionTrigger>
+              <AccordionContent>Many people searching for health information online encounter misleading or false claims, leading to self-medication, delayed treatment, and preventable harm. Our solution detects and corrects health misinformation in real-time.</AccordionContent>
             </AccordionItem>
             <AccordionItem value="item-2">
-              <AccordionTrigger>Accordion Item 2</AccordionTrigger>
-              <AccordionContent>Accordion Content 2</AccordionContent>
+              <AccordionTrigger>How does your system detect health misinformation?</AccordionTrigger>
+              <AccordionContent>We use OCR to extract text from on-screen content or uploaded documents, then apply NLP and Retrieval-Augmented Generation (RAG) to verify the information. If misinformation is found, our system provides an instant fact-check or alert.</AccordionContent>
             </AccordionItem>
             <AccordionItem value="item-3">
-              <AccordionTrigger>Accordion Item 3</AccordionTrigger>
-              <AccordionContent>Accordion Content 3</AccordionContent>
+              <AccordionTrigger>What features make your solution unique?</AccordionTrigger>
+              <AccordionContent>Our platform offers real-time health misinformation detection, diagnosis report analysis, interactive myth quizzes, a voice-activated misinformation guard, a collaborative correction wall, and a WhatsApp Web extension — all while preserving user privacy.</AccordionContent>
             </AccordionItem>
           </Accordion>
         </div>
         <footer className="footer w-[100vw] md:px-[4rem] flex bg-neutral text-neutral-content p-10 text-white ">
           <div className=' w-[50%] ' >
-            <svg
-              width="50"
-              height="50"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
-              fillRule="evenodd"
-              clipRule="evenodd"
-              className="fill-current">
-              <path
-                d="M22.672 15.226l-2.432.811.841 2.515c.33 1.019-.209 2.127-1.23 2.456-1.15.325-2.148-.321-2.463-1.226l-.84-2.518-5.013 1.677.84 2.517c.391 1.203-.434 2.542-1.831 2.542-.88 0-1.601-.564-1.86-1.314l-.842-2.516-2.431.809c-1.135.328-2.145-.317-2.463-1.229-.329-1.018.211-2.127 1.231-2.456l2.432-.809-1.621-4.823-2.432.808c-1.355.384-2.558-.59-2.558-1.839 0-.817.509-1.582 1.327-1.846l2.433-.809-.842-2.515c-.33-1.02.211-2.129 1.232-2.458 1.02-.329 2.13.209 2.461 1.229l.842 2.515 5.011-1.677-.839-2.517c-.403-1.238.484-2.553 1.843-2.553.819 0 1.585.509 1.85 1.326l.841 2.517 2.431-.81c1.02-.33 2.131.211 2.461 1.229.332 1.018-.21 2.126-1.23 2.456l-2.433.809 1.622 4.823 2.433-.809c1.242-.401 2.557.484 2.557 1.838 0 .819-.51 1.583-1.328 1.847m-8.992-6.428l-5.01 1.675 1.619 4.828 5.011-1.674-1.62-4.829z"></path>
-            </svg>
+            <img src="/logo.png" className=' h-[80px] w-[80px] ' alt="" />
             <p>
-              ACME Industries Ltd.
+              MedSense Pvt. Ltd.
               <br />
-              Providing reliable tech since 1992
+              <span className=' text-[0.8rem] italic text-gray-500 ' >Providing reliable tech since 2025</span>
             </p>
           </div>
           <div className=' w-[50%] flex flex-col items-end ' >

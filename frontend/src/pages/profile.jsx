@@ -4,6 +4,8 @@ import { doc, getDoc, updateDoc } from 'firebase/firestore';
 import { auth, database } from '../config/firebase';
 import { onAuthStateChanged, updateProfile } from 'firebase/auth';
 import { User, Mail, Edit, Check, X } from 'lucide-react';
+import { GitHubStarsButton } from '@/components/animate-ui/buttons/github-stars';
+
 
 const ProfilePage = () => {
   const [user, setUser] = useState(null);
@@ -97,6 +99,21 @@ const ProfilePage = () => {
             Go to Sign In
           </button>
         </div>
+                <footer className="footer w-[100vw] md:px-[4rem] flex bg-neutral text-neutral-content p-10 text-white ">
+          <div className=' w-[50%] ' >
+            <img src="/logo.png" className=' h-[80px] w-[80px] ' alt="" />
+            <p>
+              MedSense Pvt. Ltd.
+              <br />
+              <span className=' text-[0.8rem] italic text-gray-500 ' >Providing reliable tech since 2025</span>
+            </p>
+          </div>
+          <div className=' w-[50%] flex flex-col items-end ' >
+
+            <GitHubStarsButton username="animate-ui" repo="animate-ui" />
+
+          </div>
+        </footer>
       </div>
     );
   }

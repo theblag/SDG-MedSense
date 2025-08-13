@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Tesseract from "tesseract.js";
+import NavBar from "@/components/navbar";
 
 export default function ReportAnalyzer() {
   const [text, setText] = useState("");
@@ -81,6 +82,9 @@ export default function ReportAnalyzer() {
 
   return (
     <div style={{ padding: "20px" }}>
+      <div className="navbar fixed top-[1rem] left-1/2 -translate-x-1/2 z-50 ">
+            <NavBar />
+      </div>
       <h2>Report Analyzer</h2>
   <input type="file" accept="image/*" onChange={handleFile} />
       {loading && <p>Processing...</p>}

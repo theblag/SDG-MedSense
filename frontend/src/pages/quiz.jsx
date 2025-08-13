@@ -4,6 +4,8 @@ import { healthQuestions } from '../assets/healthQuestions';
 import WavesHero from "@/components/nurui/waves-hero";
 import { GlowCard } from '../components/nurui/spotlight-card';
 import { ArrowRight, RotateCcw, CheckCircle, XCircle, Brain, Trophy, Target } from 'lucide-react';
+import { GitHubStarsButton } from '@/components/animate-ui/buttons/github-stars';
+import NavBar from '@/components/navbar';
 
 const HealthQuiz = () => {
   const [currentQuestion, setCurrentQuestion] = useState(0);
@@ -59,6 +61,9 @@ const HealthQuiz = () => {
 
   return (
     <div className='bg-black'>
+            <div className="navbar fixed top-[1rem] left-1/2 -translate-x-1/2 z-50 ">
+            <NavBar />
+      </div>
       <div className='sec2bg'>
         <div className="w-[95vw] md:w-[90vw] mx-auto py-10 md:py-20">
           <motion.div
@@ -292,6 +297,21 @@ const HealthQuiz = () => {
             )}
           </div>
         </div>
+                <footer className="footer w-[100vw] md:px-[4rem] flex bg-neutral text-neutral-content p-10 text-white ">
+          <div className=' w-[50%] ' >
+            <img src="/logo.png" className=' h-[80px] w-[80px] ' alt="" />
+            <p>
+              MedSense Pvt. Ltd.
+              <br />
+              <span className=' text-[0.8rem] italic text-gray-500 ' >Providing reliable tech since 2025</span>
+            </p>
+          </div>
+          <div className=' w-[50%] flex flex-col items-end ' >
+
+            <GitHubStarsButton username="animate-ui" repo="animate-ui" />
+
+          </div>
+        </footer>
       </div>
     </div>
   );
