@@ -38,7 +38,7 @@ const Home = () => {
       icon: "https://cdn.lordicon.com/uppnozfl.json",
       iconRef: iconRef1,
       glowColor: "green",
-      route: "/browser-extension"
+      route: "/extension"
     },
     {
       title: "Voice Health Companion",
