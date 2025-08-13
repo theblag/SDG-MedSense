@@ -2,13 +2,11 @@ chrome.runtime.onInstalled.addListener(() => {
   console.log("Health Info Text Reader extension installed");
 });
 
-// Gemini API configuration
-const GEMINI_API_KEY = 'AIzaSyBHSmCFX7Chd-AHXpnLyiHY2H8WZRSZO8w';
+const GEMINI_API_KEY = 'AIzaSyAh3peNK06H5058iGe3s4AnN7VsVQO_wr8';
 const GEMINI_API_URL = `https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key=${GEMINI_API_KEY}`;
 
-// Rate limiting variables
 let lastRequestTime = 0;
-const MIN_REQUEST_INTERVAL = 3000; // 3 seconds between requests
+const MIN_REQUEST_INTERVAL = 3000; 
 
 async function analyzeTextWithGemini(text) {
   try {
