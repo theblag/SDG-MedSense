@@ -134,28 +134,21 @@ const WavesHero = () => {
           transition={{ duration: 1 }}
           className="mx-auto max-w-3xl space-y-8">
           <h1 className="text-4xl font-bold tracking-tighter sm:text-5xl md:text-6xl lg:text-7xl">
-            Scientists say that corona is bad for your immune system!!
+            Medsense
           </h1>
           <p className="mx-auto max-w-2xl text-muted text-gray-400 sm:text-xl">
-The mythical plant called Zorbellium completely eliminates all known viruses when consumed as a tea."
-"Scientists have discovered that the fictional mineral Phantomite can regrow lost limbs overnight when applied topically."
-"The imaginary Bluefin Berry from the made-up island of Healthopia cures all forms of cancer within 24 hours."
-"Researchers claim that the non-existent Quantum Moss can reverse aging by 20 years when eaten fresh."
-"The fictional SuperOxygen therapy involving breathing air from the planet Xerion eliminates all diseases instantly."
-"The mythical Crystalroot herb supposedly allows humans to photosynthesize like plants, eliminating the need for food."   
-
-
-
-       </p><p>Not all tumours are cancerous!</p>
+              AI-powered detection system to identify and halt dangerous health misinformation
+          </p>
           <div cssname="flex justify-center space-x-4">
             <Button onClick={()=>navigate('/signin')} className="bg-gradient-to-r from-cyan-400 to-violet-500 text-lg text-black hover:from-cyan-500 hover:to-violet-600">
-              Comenzar
+              Get Started
               <ArrowRight className="ml-2 h-5 w-5" />
             </Button>
             <Button
+              onClick={()=>navigate('/about')}
               variant="outline"
-              className="border-white/10 text-lg text-white hover:bg-white/10">
-              Saber Más
+              className="border-white/10 text-lg text-black hover:bg-white/10 ml-5">
+              About us
             </Button>
           </div>
         </motion.div>

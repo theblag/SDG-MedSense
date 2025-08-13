@@ -1,6 +1,6 @@
 # app/routers/document_router.py
 
-from fastapi import APIRouter, UploadFile, File, HTTPException, Depends
+from fastapi import APIRouter, UploadFile, File, HTTPException, Depends, Form
 from fastapi.responses import JSONResponse
 import os
 import uuid
@@ -124,6 +124,51 @@ async def upload_document(file: UploadFile = File(...), session_id: str = None):
             message=f"Document processed successfully. {result['total_chunks']} chunks created. Detected type: {result['document_type']}"
         )
         
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@router.post("/upload-and-embed/")
+async def upload_and_embed(file: UploadFile = File(...), session_id: str = Form(None)):
+    """Upload, process, and embed in one call; returns document_id and counts"""
+    try:
+        file_extension = FileUtils.validate_file(file)
+        file_type = FileUtils.get_file_type_from_extension(file_extension)
+        file_content = await FileUtils.read_file_content(file)
+
+        result = document_processor.process_document(
+            file_content=file_content,
+            filename=file.filename,
+            file_type=file_type
+        )
+
+        document_store[result["document_id"]] = {
+            "filename": result["filename"],
+            "file_type": result["file_type"],
+            "document_type": result["document_type"],
+            "total_chunks": result["total_chunks"],
+            "upload_time": result["upload_time"].isoformat(),
+            "session_id": session_id
+        }
+        document_chunks[result["document_id"]] = result["chunks"]
+        if session_id and session_id in sessions:
+            sessions[session_id]["documents"].append(result["document_id"])
+
+        # Auto-embed using detected type
+        store_result = embedding_service.store_embeddings(
+            result["chunks"],
+            user_id="default_user",
+            document_type=result["document_type"],
+            session_id=session_id
+        )
+
+        return {
+            "status": "success",
+            "document_id": result["document_id"],
+            "filename": result["filename"],
+            "document_type": result["document_type"],
+            "chunks_processed": store_result["vectors_stored"],
+            "session_id": session_id
+        }
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 

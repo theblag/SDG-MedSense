@@ -1,8 +1,82 @@
 import os
+import math
+import hashlib
+from typing import List, Dict, Any, Optional
+
 import google.generativeai as genai
 from pinecone import Pinecone, ServerlessSpec
-from typing import List, Dict, Any
 from langchain.schema import Document
+
+try:
+    import numpy as np
+except Exception:
+    np = None
+
+
+class LocalVectorStore:
+    """
+    Minimal in-memory vector store with cosine similarity and metadata filtering.
+    Used as a fallback when Pinecone is unavailable.
+    """
+
+    def __init__(self, dimension: int = 768):
+        self.dimension = dimension
+        self.id_to_vector: Dict[str, List[float]] = {}
+        self.id_to_metadata: Dict[str, Dict[str, Any]] = {}
+
+    def upsert(self, vectors: List[Dict[str, Any]]):
+        for v in vectors:
+            self.id_to_vector[v['id']] = v['values']
+            self.id_to_metadata[v['id']] = v.get('metadata', {})
+
+    def _cosine(self, a: List[float], b: List[float]) -> float:
+        if np is not None:
+            va = np.array(a, dtype=float)
+            vb = np.array(b, dtype=float)
+            denom = (np.linalg.norm(va) * np.linalg.norm(vb))
+            if denom == 0:
+                return 0.0
+            return float(np.dot(va, vb) / denom)
+        # Fallback without numpy
+        dot = sum(x*y for x, y in zip(a, b))
+        norm_a = math.sqrt(sum(x*x for x in a))
+        norm_b = math.sqrt(sum(x*x for x in b))
+        if norm_a == 0 or norm_b == 0:
+            return 0.0
+        return dot / (norm_a * norm_b)
+
+    def _matches_filter(self, metadata: Dict[str, Any], filter_query: Optional[Dict[str, Any]]) -> bool:
+        if not filter_query:
+            return True
+        for key, cond in filter_query.items():
+            if not isinstance(cond, dict) or "$eq" not in cond:
+                # simple equality
+                if metadata.get(key) != cond:
+                    return False
+            else:
+                if metadata.get(key) != cond["$eq"]:
+                    return False
+        return True
+
+    def query(self, vector: List[float], top_k: int = 5, include_metadata: bool = True, filter: Optional[Dict[str, Any]] = None):
+        matches = []
+        for vid, vec in self.id_to_vector.items():
+            md = self.id_to_metadata.get(vid, {})
+            if not self._matches_filter(md, filter):
+                continue
+            score = self._cosine(vector, vec)
+            matches.append({"id": vid, "score": score, "metadata": md})
+        # Sort by score desc
+        matches.sort(key=lambda m: m["score"], reverse=True)
+        class _Result:
+            def __init__(self, matches):
+                self.matches = matches[:top_k]
+        return _Result(matches)
+
+    def delete(self, ids: List[str]):
+        for vid in ids:
+            self.id_to_vector.pop(vid, None)
+            self.id_to_metadata.pop(vid, None)
 
 class EmbeddingService:
     def __init__(self):
@@ -18,6 +92,7 @@ class EmbeddingService:
         pinecone_region = os.getenv("PINECONE_REGION", "us-west-2")
         pinecone_cloud = os.getenv("PINECONE_CLOUD", "aws")
 
+        self.index = None
         if pinecone_api_key:
             try:
                 self.pc = Pinecone(api_key=pinecone_api_key)
@@ -32,11 +107,15 @@ class EmbeddingService:
                         )
                     )
                 self.index = self.pc.Index(pinecone_index_name)
+                self.using_local = False
             except Exception as e:
                 print(f"⚠️ Warning: Could not initialize Pinecone: {e}")
-                self.index = None
+                self.index = LocalVectorStore(dimension=768)
+                self.using_local = True
         else:
-            self.index = None
+            # No Pinecone key, use local store
+            self.index = LocalVectorStore(dimension=768)
+            self.using_local = True
 
     def get_embeddings(self, texts: List[str]) -> List[List[float]]:
         if not self.google_api_available:
@@ -56,7 +135,7 @@ class EmbeddingService:
         Store embeddings with user_id and session_id metadata for proper document isolation.
         """
         if not self.index:
-            raise Exception("Pinecone index not initialized")
+            raise Exception("Vector store not initialized")
         try:
             texts = [doc.page_content for doc in documents]
             embeddings = self.get_embeddings(texts)
@@ -82,7 +161,13 @@ class EmbeddingService:
                     'values': embedding,
                     'metadata': metadata
                 })
-            self.index.upsert(vectors=vectors)
+            # Pinecone vs Local store API compatibility
+            if hasattr(self.index, 'upsert') and 'vectors' in self.index.upsert.__code__.co_varnames:
+                # Likely Pinecone client
+                self.index.upsert(vectors=vectors)
+            else:
+                # Our LocalVectorStore
+                self.index.upsert(vectors)
             return {
                 "vectors_stored": len(vectors),
                 "document_id": documents[0].metadata["document_id"],
@@ -101,7 +186,7 @@ class EmbeddingService:
         - Otherwise, search within the user's documents
         """
         if not self.index:
-            raise Exception("Pinecone index not initialized")
+            raise Exception("Vector store not initialized")
         try:
             query_embedding = self.get_embeddings([query])[0]
             
@@ -150,10 +235,9 @@ class EmbeddingService:
                 "document_id": {"$eq": document_id},
                 "user_id": {"$eq": user_id}
             }
-            
             if session_id:
                 filter_query["session_id"] = {"$eq": session_id}
-            
+
             results = self.index.query(
                 vector=[0.1] * 768,
                 top_k=10000,
@@ -162,7 +246,10 @@ class EmbeddingService:
             )
             if results.matches:
                 vector_ids = [match.id for match in results.matches]
-                self.index.delete(ids=vector_ids)
+                if hasattr(self.index, 'delete') and 'ids' in self.index.delete.__code__.co_varnames:
+                    self.index.delete(ids=vector_ids)
+                else:
+                    self.index.delete(vector_ids)
             return True
         except Exception as e:
             return False
@@ -185,7 +272,10 @@ class EmbeddingService:
             )
             if results.matches:
                 vector_ids = [match.id for match in results.matches]
-                self.index.delete(ids=vector_ids)
+                if hasattr(self.index, 'delete') and 'ids' in self.index.delete.__code__.co_varnames:
+                    self.index.delete(ids=vector_ids)
+                else:
+                    self.index.delete(vector_ids)
             return True
         except Exception as e:
             return False

@@ -15,14 +15,14 @@ const menuItems = [
   },
   {
     icon: <AudioLines className="h-5 w-5" />,
-    label: "Explore",
-    href: "/explore",
+    label: "Extension",
+    href: "/extension",
     gradient: "radial-gradient(circle, rgba(249,115,22,0.15) 0%, rgba(234,88,12,0.06) 50%, rgba(194,65,12,0) 100%)",
     iconColor: "group-hover:text-orange-400",
   },
   {
     icon: <ChartLine className="h-5 w-5" />,
-    label: "Tracking",
+    label: "Whatever",
     href: "/tracking",
     gradient: "radial-gradient(circle, rgba(34,197,94,0.15) 0%, rgba(22,163,74,0.06) 50%, rgba(21,128,61,0) 100%)",
     iconColor: "group-hover:text-green-400",
