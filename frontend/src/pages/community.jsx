@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import NavBar from '@/components/navbar';
 import { 
   collection, 
   addDoc, 
@@ -184,6 +185,9 @@ const Community = () => {
 
   return (
     <div className="min-h-screen bg-black">
+            <div className="navbar fixed top-[1rem] left-1/2 -translate-x-1/2 z-50 ">
+            <NavBar />
+      </div>
       <div className="sec2bg">
         <div className="w-[95vw] md:w-[90vw] max-w-6xl mx-auto py-10 md:py-20">
           <motion.div

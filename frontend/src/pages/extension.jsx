@@ -1,14 +1,18 @@
 import React from 'react'
 import DownloadButton from '@/components/downloadButton'
 import { PulsatingButton } from "@/components/magicui/pulsating-button";
+import NavBar from '@/components/navbar';
 
 
 const Extension = () => {
   return (
-    <div className="bg-black min-h-screen p-6"> {/* Add a dark background to container */}
+    <div className="bg-black h-max p-6"> {/* Add a dark background to container */}
+          <div className="navbar fixed top-[1rem] left-1/2 -translate-x-1/2 z-50 ">
+            <NavBar />
+      </div>
       <div className=' absolute inset-0 extensionbg ' ></div>
       <div className="w-full flex items-center justify-center">
-        <div className="w-[90%] text-left mx-auto space-y-8 text-white">
+        <div className="w-[90%] mt-[5rem] text-left mx-auto space-y-8 text-white">
 
           {/* Main Headline */}
           <div className="space-y-4">
