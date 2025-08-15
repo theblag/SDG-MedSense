@@ -3,7 +3,7 @@ import { getAnalytics } from "firebase/analytics";
 import { getAuth, GoogleAuthProvider } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 const firebaseConfig = {
-  apiKey: "AIzaSyCHKzEWZP7Hpp8VD3qvEdqR8Me5JXJkmk8",
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
   authDomain: "medsense-e3bce.firebaseapp.com",
   projectId: "medsense-e3bce",
   storageBucket: "medsense-e3bce.firebasestorage.app",

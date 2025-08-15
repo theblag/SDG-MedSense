@@ -40,7 +40,41 @@ export default function ReportAnalyzer() {
     }
   };
 
-  const callLLM = async (ocrText) => {
+  // Option 1: Use RAG Backend (better for complex analysis)
+  const callBackendRAG = async (ocrText) => {
+    setLlmAnswer("RAG Backend is analyzing...");
+    try {
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/hackrx/run`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": "Bearer your-token-here" // Add if you need authentication
+        },
+        body: JSON.stringify({
+          documents: "data:text/plain;base64," + btoa(ocrText), // Convert text to pseudo-document
+          questions: [
+            "Simplify this medical report for a layperson",
+            "What are the key findings?",
+            "Are there any concerning values?"
+          ]
+        }),
+      });
+      
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      
+      const data = await response.json();
+      setLlmAnswer(data.answers ? data.answers.join('\n\n') : "No analysis available");
+    } catch (err) {
+      console.error("Backend error:", err);
+      // Fallback to direct Gemini call
+      await callLLMDirect(ocrText);
+    }
+  };
+
+  // Option 2: Direct Gemini call (current method)
+  const callLLMDirect = async (ocrText) => {
     setLlmAnswer("LLM is Thinking!");
     try {
       const prompt = `
@@ -109,7 +143,8 @@ export default function ReportAnalyzer() {
       const ocrResult = text.trim();
       setText(ocrResult);
       setLoading(false);
-      await callLLM(ocrResult);
+      await callBackendRAG(ocrResult); // Use RAG backend
+      // Or use: await callLLMDirect(ocrResult); // For direct Gemini
     };
   };
 
