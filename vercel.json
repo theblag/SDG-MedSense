@@ -1,6 +1,5 @@
 {
   "buildCommand": "npm ci --legacy-peer-deps && npm run build",
   "outputDirectory": "frontend/dist",
-  "installCommand": "npm ci --legacy-peer-deps",
-  "rootDirectory": "frontend"
+  "installCommand": "npm ci --legacy-peer-deps"
 }
