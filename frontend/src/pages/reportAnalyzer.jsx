@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { Upload, Brain, AlertCircle, CheckCircle, FileText, Pill, Activity } from "lucide-react";
 import Tesseract from "tesseract.js";
-import ReactSpeedometer from "react-d3-speedometer";
 
 // Mock GlowCard component matching the About page style
 const GlowCard = ({ children, className, glowColor, customSize }) => (
@@ -124,9 +123,9 @@ export default function ReportAnalyzer() {
   };
 
   return (
-    <div className="bg-black min-h-screen">
+    <div className="bg-black min-h-screen overflow-x-hidden">
       <div className="sec2bg">
-        <div className="w-[90vw] mx-auto py-20">
+        <div className="w-[100vw] mx-auto py-20">
           {/* Hero Section */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -260,17 +259,15 @@ export default function ReportAnalyzer() {
                           </div>
                           
                           <div className="mb-4">
-                            <ReactSpeedometer
-                              value={disease.probability}
-                              minValue={0}
-                              maxValue={100}
-                              needleColor="#ef4444"
-                              startColor="#22c55e"
-                              endColor="#ef4444"
-                              textColor="#ffffff"
-                              height={140}
-                              width={200}
-                            />
+                            <div className="w-full bg-gray-700 rounded-full h-4 mb-2">
+                              <div 
+                                className="bg-gradient-to-r from-green-500 to-red-500 h-4 rounded-full transition-all duration-300" 
+                                style={{ width: `${disease.probability}%` }}
+                              ></div>
+                            </div>
+                            <div className="text-center text-white font-semibold">
+                              {disease.probability}%
+                            </div>
                           </div>
                           
                           <div className="flex items-center justify-center gap-2 text-sm">

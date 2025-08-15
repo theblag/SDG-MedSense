@@ -85,7 +85,7 @@ const Home = () => {
   ];
 
   return (
-    <div className='bg-black'>
+    <div className='bg-black overflow-x-hidden'>
       <div className="navbar fixed top-[1rem] left-1/2 -translate-x-1/2 z-50 ">
             <NavBar />
       </div>
