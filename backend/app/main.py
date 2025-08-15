@@ -48,15 +48,6 @@ async def hackrx_run(request: HackRxRequest, token: str = Depends(verify_token))
     """
     # Generate unique session ID for this request to isolate documents
     session_id = f"hackrx_{uuid.uuid4().hex[:8]}"
-
-# --- Webhook endpoint for Railway ---
-from fastapi import Request
-
-@app.post("/webhook")
-async def railway_webhook(request: Request):
-    data = await request.json()
-    # You can add custom logic here
-    return {"message": "Webhook received", "data": data}
     
     # Download PDF from URL
     try:
@@ -116,4 +107,13 @@ async def railway_webhook(request: Request):
     except Exception as e:
         print(f"Warning: Could not clean up session vectors: {e}")
     
-    return HackRxResponse(answers=answers) 
+    return HackRxResponse(answers=answers)
+
+# --- Webhook endpoint for Railway ---
+from fastapi import Request
+
+@app.post("/webhook")
+async def railway_webhook(request: Request):
+    data = await request.json()
+    # You can add custom logic here
+    return {"message": "Webhook received", "data": data} 
