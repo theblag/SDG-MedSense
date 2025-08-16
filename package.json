@@ -1,6 +1,0 @@
-{
-  "dependencies": {
-    "@chakra-ui/react": "^3.24.2",
-    "tesseract.js": "^6.0.1"
-  }
-}
