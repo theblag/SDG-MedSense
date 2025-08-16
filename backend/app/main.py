@@ -40,6 +40,14 @@ def verify_token(credentials: HTTPAuthorizationCredentials = Depends(security)):
 def home():
     return {"message": "Document Processing API is up!"}
 
+
+@app.get("/health")
+def health():
+    """Simple health check endpoint for render/monitoring.
+    Returns 200 when the app is running.
+    """
+    return {"status": "ok", "service": "SDG-MedSense backend"}
+
 @app.post("/hackrx/run", response_model=HackRxResponse)
 async def hackrx_run(request: HackRxRequest, token: str = Depends(verify_token)):
     """
