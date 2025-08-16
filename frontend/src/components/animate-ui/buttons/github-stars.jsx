@@ -1,7 +1,7 @@
 'use client';;
 import * as React from 'react';
 import { Star } from 'lucide-react';
-import { motion, AnimatePresence, useMotionValue, useSpring, useInView } from 'motion/react';
+import { motion, AnimatePresence, useMotionValue, useSpring, useInView } from 'framer-motion';
 
 import { cn } from '@/lib/utils';
 import { SlidingNumber } from '@/components/animate-ui/text/sliding-number';
